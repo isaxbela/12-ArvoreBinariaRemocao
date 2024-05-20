@@ -248,12 +248,46 @@ void removerElementoArvore(NO* no, int valor) {
 
 
 	// caso 1: sem filhos	
-	
+
+	if (atual->esq == NULL && atual->dir == NULL) {
+		if (pai == NULL) {
+			raiz = NULL;
+		}
+		else if (pai->esq == atual) {
+			pai->esq = NULL;
+		}
+		else {
+			pai->dir = NULL;
+		}
+		free(atual);
+	}
 
 	// caso 2: um filho	
 	
+	else if (atual->esq == NULL || atual->dir == NULL) {
+		NO* filho = (atual->esq != NULL) ? atual->esq : atual->dir;
+		if (pai == NULL) {
+			raiz = filho;
+		}
+		else if (pai->esq == atual) {
+			pai->esq = filho;
+		}
+		else {
+			pai->dir = filho;
+		}
+		free(atual);
+	}
 
 	// caso 3: dois filhos
+
+	if (atual->esq == NULL) {
+		NO* filho = atual->dir;
+		delete atual;
+	}
+	else if (atual->dir == NULL) {
+		NO* filho = atual->esq;
+		delete atual;
+	}
 
 	// procura o elmento mais a esquerda da sub-arvore da direita
 	NO* sucessor = atual->dir;
